@@ -1,5 +1,6 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { IUser } from '../types/user';
 import Card from './UI/Card';
 
 const Form = styled.form`
@@ -30,14 +31,18 @@ const Button = styled.button`
   font-size: 18px;
 `;
 
-function UserForm({ fetchUserHandler }: any) {
+interface IProps {
+  fetchUserHandler: (user: IUser) => void;
+}
+
+function UserForm({ fetchUserHandler }: IProps) {
   const [userData, setUserData] = useState({
     name: '',
     age: 0,
   });
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const { name, age } = userData;
+    fetchUserHandler(userData);
   };
   const onChange = (event: React.FormEvent<HTMLInputElement>) => {
     const {
@@ -46,11 +51,10 @@ function UserForm({ fetchUserHandler }: any) {
     setUserData(prev => {
       return {
         ...prev,
-        [name]: value,
+        [name]: name === 'age' ? Number(value) : value,
       };
     });
   };
-  console.log(userData);
   return (
     <Card>
       <Form onSubmit={onSubmit}>

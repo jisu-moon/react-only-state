@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import UserForm from './components/UserForm';
+import { IUser } from './types/user';
 
 function App() {
-  const [user, setUser] = useState([]);
-  const fetchUserHandler = (user: any) => {
-    console.log(user);
+  const [usersData, setUsersData] = useState<IUser[]>([]);
+
+  const fetchUserHandler = (user: IUser) => {
+    setUsersData(prev => [user, ...prev]);
   };
+  console.log(usersData);
   return (
     <>
-      <UserForm fetchUserHandler={(user: any) => fetchUserHandler(user)} />
+      <UserForm fetchUserHandler={user => fetchUserHandler(user)} />
     </>
   );
 }
