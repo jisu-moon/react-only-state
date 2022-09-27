@@ -40,6 +40,7 @@ function UserForm({ fetchUserHandler }: IProps) {
     name: '',
     age: 0,
   });
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     fetchUserHandler(userData);
@@ -55,6 +56,7 @@ function UserForm({ fetchUserHandler }: IProps) {
       };
     });
   };
+
   return (
     <Card>
       <Form onSubmit={onSubmit}>
