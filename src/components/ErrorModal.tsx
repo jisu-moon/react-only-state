@@ -57,7 +57,7 @@ interface IProps {
   setModalShow: Dispatch<SetStateAction<boolean>>;
 }
 
-function Modal({ msg, setModalShow }: IProps) {
+function ErrorModal({ msg, setModalShow }: IProps) {
   return (
     <Wrapper>
       <Overlay onClick={() => setModalShow(false)} />
@@ -72,4 +72,4 @@ function Modal({ msg, setModalShow }: IProps) {
   );
 }
 
-export default Modal;
+export default ErrorModal;

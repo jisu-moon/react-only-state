@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { IUser } from '../types/user';
-import Modal from './Modal';
-import Card from './UI/Card';
+import { IUser } from '../../types/user';
+import Modal from '../ErrorModal';
+import Card from '../UI/Card';
 
 const Form = styled.form`
   display: flex;
@@ -47,7 +47,7 @@ function UserForm({ fetchUserHandler }: IProps) {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { name, age } = userData;
-    if (name.trim().length || age === null) {
+    if (name.trim().length === 0 || age === null) {
       setModalShow(true);
       setError('입력창을 모두 채워주세요.');
       return;
@@ -66,7 +66,7 @@ function UserForm({ fetchUserHandler }: IProps) {
     setUserData(prev => {
       return {
         ...prev,
-        [name]: name === 'age' ? Number(value) : value,
+        [name]: name === 'age' ? +value : value,
       };
     });
   };

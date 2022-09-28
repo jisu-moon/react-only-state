@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import UserForm from './components/UserForm';
-import UserList from './components/UserList';
+import UserForm from './components/User/UserForm';
+import UserList from './components/User/UserList';
 import { IUser } from './types/user';
 
 const Wrapper = styled.div`
@@ -18,9 +18,7 @@ function App() {
   return (
     <Wrapper>
       <UserForm fetchUserHandler={user => fetchUserHandler(user)} />
-      {usersData.length === 0 ? null : (
-        <UserList usersData={usersData} date={Date.now()} />
-      )}
+      {usersData.length === 0 ? null : <UserList usersData={usersData} />}
     </Wrapper>
   );
 }
