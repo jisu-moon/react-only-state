@@ -43,6 +43,7 @@ function UserForm({ fetchUserHandler }: IProps) {
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    event.currentTarget.reset();
     fetchUserHandler(userData);
   };
   const onChange = (event: React.FormEvent<HTMLInputElement>) => {
