@@ -70,7 +70,6 @@ function UserForm({ fetchUserHandler }: IProps) {
       };
     });
   };
-  console.log(modalShow);
   return (
     <>
       <Card>
