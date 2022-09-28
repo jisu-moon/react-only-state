@@ -55,6 +55,7 @@ function UserForm({ fetchUserHandler }: IProps) {
       setError('0이하의 나이값은 입력 할 수 없습니다.');
     } else {
       event.currentTarget.reset();
+      setUserData({ name: '', age: null });
       fetchUserHandler(userData);
     }
   };
