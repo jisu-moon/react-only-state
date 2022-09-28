@@ -9,16 +9,15 @@ const Wrapper = styled.div`
 `;
 
 function App() {
-  const [usersData, setUsersData] = useState<IUser[]>([]);
+  const [usersList, setUsersList] = useState<IUser[]>([]);
 
-  const fetchUserHandler = (user: IUser) => {
-    setUsersData(prev => [user, ...prev]);
-  };
+  const fetchUsersList = (userList: IUser) =>
+    setUsersList(prev => [userList, ...prev]);
 
   return (
     <Wrapper>
-      <UserForm fetchUserHandler={user => fetchUserHandler(user)} />
-      {usersData.length === 0 ? null : <UserList usersData={usersData} />}
+      <UserForm fetchUsersList={userList => fetchUsersList(userList)} />
+      {usersList.length === 0 ? null : <UserList usersList={usersList} />}
     </Wrapper>
   );
 }

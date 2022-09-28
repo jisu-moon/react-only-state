@@ -33,11 +33,11 @@ const Button = styled.button`
 `;
 
 interface IProps {
-  fetchUserHandler: (user: IUser) => void;
+  fetchUsersList: (user: IUser) => void;
 }
 
-function UserForm({ fetchUserHandler }: IProps) {
-  const [userData, setUserData] = useState({
+function UserForm({ fetchUsersList }: IProps) {
+  const [userList, setUserList] = useState({
     name: '',
     age: null,
   });
@@ -46,7 +46,7 @@ function UserForm({ fetchUserHandler }: IProps) {
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const { name, age } = userData;
+    const { name, age } = userList;
     if (name.trim().length === 0 || age === null) {
       setModalShow(true);
       setError('입력창을 모두 채워주세요.');
@@ -56,14 +56,14 @@ function UserForm({ fetchUserHandler }: IProps) {
       setError('0이하의 나이값은 입력 할 수 없습니다.');
       return;
     }
-    setUserData({ name: '', age: null });
-    fetchUserHandler(userData);
+    setUserList({ name: '', age: null });
+    fetchUsersList(userList);
   };
   const onChange = (event: React.FormEvent<HTMLInputElement>) => {
     const {
       currentTarget: { name, value },
     } = event;
-    setUserData(prev => {
+    setUserList(prev => {
       return {
         ...prev,
         [name]: name === 'age' ? +value : value,
@@ -80,7 +80,7 @@ function UserForm({ fetchUserHandler }: IProps) {
             <Input
               type='text'
               name='name'
-              value={userData.name}
+              value={userList.name}
               onChange={onChange}
             />
           </Item>
@@ -89,7 +89,7 @@ function UserForm({ fetchUserHandler }: IProps) {
             <Input
               type='number'
               name='age'
-              value={userData.age ?? ''}
+              value={userList.age ?? ''}
               onChange={onChange}
             />
           </Item>
