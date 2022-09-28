@@ -47,17 +47,17 @@ function UserForm({ fetchUserHandler }: IProps) {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { name, age } = userData;
-    if (name === '' || age === null) {
+    if (name.trim().length || age === null) {
       setModalShow(true);
       setError('입력창을 모두 채워주세요.');
+      return;
     } else if (age < 0) {
       setModalShow(true);
       setError('0이하의 나이값은 입력 할 수 없습니다.');
-    } else {
-      event.currentTarget.reset();
-      setUserData({ name: '', age: null });
-      fetchUserHandler(userData);
+      return;
     }
+    setUserData({ name: '', age: null });
+    fetchUserHandler(userData);
   };
   const onChange = (event: React.FormEvent<HTMLInputElement>) => {
     const {
@@ -70,17 +70,28 @@ function UserForm({ fetchUserHandler }: IProps) {
       };
     });
   };
+
   return (
     <>
       <Card>
         <Form onSubmit={onSubmit}>
           <Item>
             <Label>Username</Label>
-            <Input type='text' name='name' onChange={onChange} />
+            <Input
+              type='text'
+              name='name'
+              value={userData.name}
+              onChange={onChange}
+            />
           </Item>
           <Item>
             <Label>Age (Years)</Label>
-            <Input type='number' name='age' onChange={onChange} />
+            <Input
+              type='number'
+              name='age'
+              value={userData.age ?? ''}
+              onChange={onChange}
+            />
           </Item>
           <Button type='submit'>Add User</Button>
         </Form>

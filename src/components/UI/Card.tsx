@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 interface IProps {
   children: React.ReactNode;
-  className?: string;
+  cssClass?: string;
 }
 
 const Wrapper = styled.div`
@@ -21,8 +21,8 @@ const Wrapper = styled.div`
   }
 `;
 
-function Card({ children, className }: IProps) {
-  return <Wrapper className={className}>{children}</Wrapper>;
+function Card({ children, cssClass }: IProps) {
+  return <Wrapper className={cssClass}>{children}</Wrapper>;
 }
 
 export default Card;

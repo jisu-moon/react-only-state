@@ -61,7 +61,7 @@ function Modal({ msg, setModalShow }: IProps) {
   return (
     <Wrapper>
       <Overlay onClick={() => setModalShow(false)} />
-      <Card className='modal'>
+      <Card cssClass='modal'>
         <Title>
           <p>Invalid Input</p>
           <button onClick={() => setModalShow(false)}>X</button>
