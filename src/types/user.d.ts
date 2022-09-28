@@ -1,4 +1,4 @@
 export interface IUser {
   name: string;
-  age: number;
+  age: number | null;
 }

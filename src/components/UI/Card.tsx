@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 interface IProps {
   children: React.ReactNode;
+  modal?: boolean;
 }
 
 const Wrapper = styled.div`
@@ -12,10 +13,16 @@ const Wrapper = styled.div`
   margin: 0 auto;
   width: 100%;
   margin-bottom: 50px;
+  overflow: hidden;
+  &.modal {
+    position: relative;
+    z-index: 2;
+    padding-top: 50px;
+  }
 `;
 
-function Card({ children }: IProps) {
-  return <Wrapper>{children}</Wrapper>;
+function Card({ children, modal }: IProps) {
+  return <Wrapper className={modal ? 'modal' : ''}>{children}</Wrapper>;
 }
 
 export default Card;

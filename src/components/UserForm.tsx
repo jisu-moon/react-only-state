@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { IUser } from '../types/user';
+import Modal from './Modal';
 import Card from './UI/Card';
 
 const Form = styled.form`
@@ -38,13 +39,24 @@ interface IProps {
 function UserForm({ fetchUserHandler }: IProps) {
   const [userData, setUserData] = useState({
     name: '',
-    age: 0,
+    age: null,
   });
+  const [modalShow, setModalShow] = useState(false);
+  const [Error, setError] = useState('');
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    event.currentTarget.reset();
-    fetchUserHandler(userData);
+    const { name, age } = userData;
+    if (name === '' || age === null) {
+      setModalShow(true);
+      setError('입력창을 모두 채워주세요.');
+    } else if (age < 0) {
+      setModalShow(true);
+      setError('0이하의 나이값은 입력 할 수 없습니다.');
+    } else {
+      event.currentTarget.reset();
+      fetchUserHandler(userData);
+    }
   };
   const onChange = (event: React.FormEvent<HTMLInputElement>) => {
     const {
@@ -57,21 +69,24 @@ function UserForm({ fetchUserHandler }: IProps) {
       };
     });
   };
-
+  console.log(modalShow);
   return (
-    <Card>
-      <Form onSubmit={onSubmit}>
-        <Item>
-          <Label>Username</Label>
-          <Input type='text' name='name' onChange={onChange} />
-        </Item>
-        <Item>
-          <Label>Age (Years)</Label>
-          <Input type='number' name='age' onChange={onChange} />
-        </Item>
-        <Button type='submit'>Add User</Button>
-      </Form>
-    </Card>
+    <>
+      <Card>
+        <Form onSubmit={onSubmit}>
+          <Item>
+            <Label>Username</Label>
+            <Input type='text' name='name' onChange={onChange} />
+          </Item>
+          <Item>
+            <Label>Age (Years)</Label>
+            <Input type='number' name='age' onChange={onChange} />
+          </Item>
+          <Button type='submit'>Add User</Button>
+        </Form>
+      </Card>
+      {modalShow ? <Modal msg={Error} setModalShow={setModalShow} /> : null}
+    </>
   );
 }
 
