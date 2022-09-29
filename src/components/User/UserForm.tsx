@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { IUser } from '../../types/user';
-import Modal from '../ErrorModal';
+import ErrorModal from '../ErrorModal';
 import Card from '../UI/Card';
 
 const Form = styled.form`
@@ -41,18 +41,18 @@ function UserForm({ fetchUsersList }: IProps) {
     name: '',
     age: null,
   });
-  const [modalShow, setModalShow] = useState(false);
-  const [Error, setError] = useState('');
+  const [errorModalShow, setErrorModalShow] = useState(false);
+  const [error, setError] = useState('');
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { name, age } = userList;
     if (name.trim().length === 0 || age === null) {
-      setModalShow(true);
+      setErrorModalShow(true);
       setError('입력창을 모두 채워주세요.');
       return;
     } else if (age < 0) {
-      setModalShow(true);
+      setErrorModalShow(true);
       setError('0이하의 나이값은 입력 할 수 없습니다.');
       return;
     }
@@ -96,7 +96,9 @@ function UserForm({ fetchUsersList }: IProps) {
           <Button type='submit'>Add User</Button>
         </Form>
       </Card>
-      {modalShow ? <Modal msg={Error} setModalShow={setModalShow} /> : null}
+      {errorModalShow ? (
+        <ErrorModal msg={error} setErrorModalShow={setErrorModalShow} />
+      ) : null}
     </>
   );
 }

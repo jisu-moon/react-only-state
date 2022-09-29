@@ -18,6 +18,7 @@ const Wrapper = styled.div`
     position: relative;
     z-index: 2;
     padding-top: 50px;
+    max-width: 800px;
   }
 `;
 

@@ -1,3 +1,4 @@
+import ReactDOM from 'react-dom';
 import { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import Card from './UI/Card';
@@ -11,6 +12,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 50px;
 `;
 const Overlay = styled.div`
   background: rgba(0, 0, 0, 0.5);
@@ -54,21 +56,32 @@ const Content = styled.div`
 
 interface IProps {
   msg: string;
-  setModalShow: Dispatch<SetStateAction<boolean>>;
+  setErrorModalShow: Dispatch<SetStateAction<boolean>>;
 }
 
-function ErrorModal({ msg, setModalShow }: IProps) {
+const Modal = ({ msg, setErrorModalShow }: IProps) => {
   return (
     <Wrapper>
-      <Overlay onClick={() => setModalShow(false)} />
+      <Overlay onClick={() => setErrorModalShow(false)} />
       <Card cssClass='modal'>
         <Title>
           <p>Invalid Input</p>
-          <button onClick={() => setModalShow(false)}>X</button>
+          <button onClick={() => setErrorModalShow(false)}>X</button>
         </Title>
         <Content>{msg}</Content>
       </Card>
     </Wrapper>
+  );
+};
+
+function ErrorModal({ msg, setErrorModalShow }: IProps) {
+  return (
+    <>
+      {ReactDOM.createPortal(
+        <Modal msg={msg} setErrorModalShow={setErrorModalShow} />,
+        document.querySelector('#modal-root')!,
+      )}
+    </>
   );
 }
 
