@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { IUser } from '../../types/user';
 import ErrorModal from '../ErrorModal';
@@ -70,6 +70,17 @@ function UserForm({ fetchUsersList }: IProps) {
       };
     });
   };
+
+  useEffect(() => {
+    const identifier = setTimeout(() => {
+      userList.name.length > 5 ? console.log(true) : console.log(false);
+    }, 500);
+
+    return () => {
+      console.log('cleanup 함수 실행');
+      clearTimeout(identifier);
+    };
+  }, [userList]);
 
   return (
     <>
