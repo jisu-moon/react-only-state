@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import styled from 'styled-components';
-import { IUser } from '../../types/user';
+import { IUser, IUserReducer } from '../../types/user';
 import ErrorModal from '../ErrorModal';
 import Card from '../UI/Card';
 
@@ -36,8 +36,17 @@ interface IProps {
   fetchUsersList: (user: IUser) => void;
 }
 
+const userListReducer = (state: IUser, action: IUserReducer) => {
+  const { type, value } = action;
+  if (type === 'INIT') return { name: '', age: null };
+  return {
+    ...state,
+    [type]: type === 'age' ? +value! : value,
+  };
+};
+
 function UserForm({ fetchUsersList }: IProps) {
-  const [userList, setUserList] = useState({
+  const [userList, setUserList] = useReducer(userListReducer, {
     name: '',
     age: null,
   });
@@ -56,19 +65,14 @@ function UserForm({ fetchUsersList }: IProps) {
       setError('0이하의 나이값은 입력 할 수 없습니다.');
       return;
     }
-    setUserList({ name: '', age: null });
+    setUserList({ type: 'INIT' });
     fetchUsersList(userList);
   };
   const onChange = (event: React.FormEvent<HTMLInputElement>) => {
     const {
       currentTarget: { name, value },
     } = event;
-    setUserList(prev => {
-      return {
-        ...prev,
-        [name]: name === 'age' ? +value : value,
-      };
-    });
+    setUserList({ type: name, value: value });
   };
 
   useEffect(() => {

@@ -1,6 +1,4 @@
-import { useContext } from 'react';
 import styled from 'styled-components';
-import { UserListsContext } from '../../store/user-lists-context';
 import { IUser } from '../../types/user';
 import Card from '../UI/Card';
 
