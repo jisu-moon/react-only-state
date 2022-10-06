@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { UserListsContext } from '../../store/user-lists-context';
 import { IUser, IUserReducer } from '../../types/user';
 import ErrorModal from '../ErrorModal';
+import Button from '../UI/Button';
 import Card from '../UI/Card';
 
 const Form = styled.form`
@@ -24,13 +25,6 @@ const Label = styled.label`
   font-size: 24px;
   color: ${({ theme }) => theme.white.textColor};
   font-weight: 900;
-`;
-const Button = styled.button`
-  padding: 10px;
-  background: ${({ theme }) => theme.red};
-  color: ${({ theme }) => theme.black.textColor};
-  border: 0;
-  font-size: 18px;
 `;
 
 const userListReducer = (state: IUser, action: IUserReducer) => {
@@ -105,7 +99,9 @@ function UserForm() {
               onChange={onChange}
             />
           </Item>
-          <Button type='submit'>Add User</Button>
+          <Button cssClass='long' type='submit'>
+            Add User
+          </Button>
         </Form>
       </Card>
       {errorModalShow ? (

@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 import { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import Card from './UI/Card';
+import Button from './UI/Button';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -36,18 +37,6 @@ const Title = styled.h2`
   top: 0;
   left: 0;
   font-size: 24px;
-  button {
-    font-weight: 400;
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translate(0, -50%);
-    border: 0;
-    color: #fff;
-    font-size: 18px;
-    background: transparent;
-    cursor: pointer;
-  }
 `;
 const Content = styled.div`
   color: #000;
@@ -66,7 +55,13 @@ const Modal = ({ msg, setErrorModalShow }: IProps) => {
       <Card cssClass='modal'>
         <Title>
           <p>Invalid Input</p>
-          <button onClick={() => setErrorModalShow(false)}>X</button>
+          <Button
+            type='button'
+            cssClass='right-close'
+            onClick={() => setErrorModalShow(false)}
+          >
+            X
+          </Button>
         </Title>
         <Content>{msg}</Content>
       </Card>
