@@ -1,10 +1,7 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
-import { IUser } from '../../types/user';
+import { UserListsContext } from '../../store/user-lists-context';
 import Card from '../UI/Card';
-
-interface IProps {
-  usersList: IUser[];
-}
 
 const ListWrapper = styled.ul`
   display: flex;
@@ -20,11 +17,12 @@ const List = styled.li`
   font-weight: bold;
 `;
 
-function UserList({ usersList }: IProps) {
+function UserList() {
+  const { userLists } = useContext(UserListsContext);
   return (
     <Card>
       <ListWrapper>
-        {usersList.map(({ name, age }, index) => (
+        {userLists.map(({ name, age }, index) => (
           <List key={index}>
             {name} ({age} years old)
           </List>

@@ -1,5 +1,6 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import styled from 'styled-components';
+import { UserListsContext } from '../../store/user-lists-context';
 import { IUser, IUserReducer } from '../../types/user';
 import ErrorModal from '../ErrorModal';
 import Card from '../UI/Card';
@@ -32,10 +33,6 @@ const Button = styled.button`
   font-size: 18px;
 `;
 
-interface IProps {
-  fetchUsersList: (user: IUser) => void;
-}
-
 const userListReducer = (state: IUser, action: IUserReducer) => {
   const { type, value } = action;
   if (type === 'INIT') return { name: '', age: null };
@@ -45,13 +42,14 @@ const userListReducer = (state: IUser, action: IUserReducer) => {
   };
 };
 
-function UserForm({ fetchUsersList }: IProps) {
+function UserForm() {
   const [userList, setUserList] = useReducer(userListReducer, {
     name: '',
     age: null,
   });
   const [errorModalShow, setErrorModalShow] = useState(false);
   const [error, setError] = useState('');
+  const { fetchUsersList } = useContext(UserListsContext);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -65,8 +63,8 @@ function UserForm({ fetchUsersList }: IProps) {
       setError('0이하의 나이값은 입력 할 수 없습니다.');
       return;
     }
-    setUserList({ type: 'INIT' });
     fetchUsersList(userList);
+    setUserList({ type: 'INIT' });
   };
   const onChange = (event: React.FormEvent<HTMLInputElement>) => {
     const {
@@ -77,11 +75,10 @@ function UserForm({ fetchUsersList }: IProps) {
 
   useEffect(() => {
     const identifier = setTimeout(() => {
-      userList.name.length > 5 ? console.log(true) : console.log(false);
+      userList.name.length < 5 && console.log('안됨');
     }, 500);
 
     return () => {
-      console.log('cleanup 함수 실행');
       clearTimeout(identifier);
     };
   }, [userList]);

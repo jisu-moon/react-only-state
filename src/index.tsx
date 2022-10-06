@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import App from './App';
+import { UserListsProvider } from './store/user-lists-context';
 import { theme } from './theme';
 
 const GlobalStyle = createGlobalStyle`
@@ -55,8 +56,10 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 root.render(
-  <ThemeProvider theme={theme}>
-    <GlobalStyle />
-    <App />
-  </ThemeProvider>,
+  <UserListsProvider>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <App />
+    </ThemeProvider>
+  </UserListsProvider>,
 );
